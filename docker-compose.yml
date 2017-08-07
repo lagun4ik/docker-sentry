@@ -15,8 +15,10 @@ services:
     depends_on:
       - redis
       - postgres
+      - rabbitmq
       - sentry-cron
       - sentry-worker
+      - sentry-installer
     volumes:
       - ./config/sentry.conf.py:/etc/sentry/sentry.conf.py:ro
       - ./data/sentry-web/files:/var/lib/sentry/files
@@ -33,6 +35,8 @@ services:
     depends_on:
       - redis
       - postgres
+      - rabbitmq
+      - sentry-installer
     volumes:
       - ./config/sentry.conf.py:/etc/sentry/sentry.conf.py:ro
       - ./data/sentry-cron/files:/var/lib/sentry/files
@@ -49,6 +53,8 @@ services:
     depends_on:
       - redis
       - postgres
+      - rabbitmq
+      - sentry-installer
     volumes:
       - ./config/sentry.conf.py:/etc/sentry/sentry.conf.py:ro
       - ./data/sentry-worker/files:/var/lib/sentry/files
@@ -65,6 +71,7 @@ services:
     depends_on:
       - redis
       - postgres
+      - rabbitmq
     volumes:
       - ./config/sentry.conf.py:/etc/sentry/sentry.conf.py:ro
       - ./data/sentry-installer:/tmp/installer

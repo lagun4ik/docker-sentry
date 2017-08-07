@@ -3,7 +3,7 @@ version: '3'
 services:
 
   nginx:
-    image: scratch
+    image: busybox
 
   sentry-web:
     restart: always

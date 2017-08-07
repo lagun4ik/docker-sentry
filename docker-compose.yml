@@ -16,11 +16,11 @@ services:
       - rabbitmq
       - sentry-cron
       - sentry-worker
-      - sentry-installer
     volumes:
       - ./config/sentry.conf.py:/etc/sentry/sentry.conf.py:ro
       - ./data/sentry-web/files:/var/lib/sentry/files
-      - ./scripts/sentry-run:/usr/local/bin/sentry-run
+      - ./data/sentry-installer:/tmp/installer
+      - ./bin/sentry-run:/usr/local/bin/sentry-run
     logging:
       options:
         max-size: 100m
@@ -34,11 +34,11 @@ services:
       - redis
       - postgres
       - rabbitmq
-      - sentry-installer
     volumes:
       - ./config/sentry.conf.py:/etc/sentry/sentry.conf.py:ro
       - ./data/sentry-cron/files:/var/lib/sentry/files
-      - ./scripts/sentry-run:/usr/local/bin/sentry-run
+      - ./data/sentry-installer:/tmp/installer
+      - ./bin/sentry-run:/usr/local/bin/sentry-run
     logging:
       options:
         max-size: 100m
@@ -52,20 +52,19 @@ services:
       - redis
       - postgres
       - rabbitmq
-      - sentry-installer
     volumes:
       - ./config/sentry.conf.py:/etc/sentry/sentry.conf.py:ro
       - ./data/sentry-worker/files:/var/lib/sentry/files
-      - ./scripts/sentry-run:/usr/local/bin/sentry-run
+      - ./data/sentry-installer:/tmp/installer
+      - ./bin/sentry-run:/usr/local/bin/sentry-run
     logging:
       options:
         max-size: 100m
 
   sentry-installer:
-    restart: always
     image: sentry:8.18.0
     env_file: env/sentry.env
-    command: sentry-installer
+    command: "sentry-install"
     depends_on:
       - redis
       - postgres
@@ -73,7 +72,7 @@ services:
     volumes:
       - ./config/sentry.conf.py:/etc/sentry/sentry.conf.py:ro
       - ./data/sentry-installer:/tmp/installer
-      - ./scripts/sentry-installer:/usr/local/bin/sentry-installer
+      - ./bin/sentry-install:/usr/local/bin/sentry-install
     logging:
       options:
         max-size: 100m
@@ -114,4 +113,3 @@ services:
     logging:
       options:
         max-size: 100m
-        

@@ -7,12 +7,15 @@ FILE_FLAG=/tmp/installer/.installed
 if [ -z "$SENTRY_SECRET_KEY" ]
 then
       echo "ERROR: SENTRY_SECRET_KEY is not set" 1>&2
+      sleep 10
       exit 1
 fi
 
-if test ! -f ${FILE_FLAG};
+if [ ! -f ${FILE_FLAG} ]
 then
-      sentry upgrade    
+      sleep 10
+      sentry upgrade --noinput
+      sentry createuser --email admin --password admin --superuser --no-input
       touch ${FILE_FLAG}
 fi
 

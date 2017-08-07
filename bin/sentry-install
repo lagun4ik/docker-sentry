@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+set -e
+
+FILE_FLAG=/tmp/installer/.installed
+
+if [ -z "$SENTRY_SECRET_KEY" ]
+then
+      echo "ERROR: SENTRY_SECRET_KEY is not set" 1>&2
+      exit 1
+fi
+
+if test ! -f ${FILE_FLAG};
+then
+      sentry upgrade    
+      touch ${FILE_FLAG}
+fi
+
+exec "$@"

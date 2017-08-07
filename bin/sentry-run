@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+set -e
+
+FILE_FLAG=/tmp/installer/.installed
+
+if [ -z "$SENTRY_SECRET_KEY" ]
+then
+      echo "ERROR: SENTRY_SECRET_KEY is not set" 1>&2
+      exit 1
+fi
+
+counter=1
+while [[ test ! -f ${FILE_FLAG} && ${counter} -lt 301 ]]; do
+
+      if [ ${counter} -eq 301 ]
+      then
+            echo "ERROR: Waiting too long" 1>&2
+            exit 1
+      fi
+
+      sleep 1
+      let counter = counter++
+      echo "waiting ($counter/300)"
+done
+
+
+exec sentry run "$@"

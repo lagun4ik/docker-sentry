@@ -1,0 +1,7 @@
+version: '3'
+
+services:
+
+  sentry-web:
+    ports:
+      - "9000:9000"

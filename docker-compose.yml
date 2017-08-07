@@ -1,6 +1,7 @@
 version: '3'
 
 services:
+
   nginx:
     image: nginx:1.13.3-alpine
     command: exit
@@ -10,8 +11,6 @@ services:
     image: sentry:8.18.0
     env_file: env/sentry.env
     command: "sentry-run web"
-    expose:
-      - "9000"
     depends_on:
       - redis
       - postgres

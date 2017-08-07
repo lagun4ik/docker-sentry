@@ -1,6 +1,7 @@
 version: '3'
 
 services:
+
   nginx:
     restart: always
     command: "nginx -g daemon off;"
@@ -14,3 +15,7 @@ services:
     logging:
       options:
         max-size: 100m
+
+  sentry-web:
+    expose:
+      - "9000"

@@ -4,12 +4,12 @@ Easy way to bootstrap the Sentry docker infrastructure (with Postgres, Redis, Ra
 
 Just create env files and run one of the start commands!
 
-## Сreate env files
+## Create env files
 
 ```bash
-cp ./env/postgres.env.exmple ./env/postgres.env
-cp ./env/rabbitmq.env.exmple ./env/rabbitmq.env
-cp ./env/sentry.env.exmple ./env/sentry.env
+cp ./env/postgres.env.example ./env/postgres.env
+cp ./env/rabbitmq.env.example ./env/rabbitmq.env
+cp ./env/sentry.env.example ./env/sentry.env
 sed -i 's|SENTRY_SECRET_KEY=|SENTRY_SECRET_KEY='"$(docker run --rm sentry:8.18.0 config generate-secret-key)"'|g' ./env/sentry.env
 ```
 

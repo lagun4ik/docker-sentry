@@ -2,16 +2,12 @@ version: '3'
 
 services:
 
-  nginx:
-    image: busybox
-
   sentry-web:
     restart: always
     image: sentry:8.19.0
     env_file: env/sentry.env
     command: "sentry-run web"
     depends_on:
-      - redis
       - postgres
       - rabbitmq
       - sentry-cron
@@ -31,7 +27,6 @@ services:
     env_file: env/sentry.env
     command: "sentry-run cron"
     depends_on:
-      - redis
       - postgres
       - rabbitmq
     volumes:
@@ -49,7 +44,6 @@ services:
     env_file: env/sentry.env
     command: "sentry-run worker"
     depends_on:
-      - redis
       - postgres
       - rabbitmq
     volumes:
@@ -66,7 +60,6 @@ services:
     env_file: env/sentry.env
     command: "sentry-install"
     depends_on:
-      - redis
       - postgres
       - rabbitmq
     volumes:
@@ -77,20 +70,20 @@ services:
       options:
         max-size: 100m
 
+  rabbitmq-management:
+    image: rabbitmq:3.6.10-management-alpine
+    env_file: env/rabbitmq.env
+    ports:
+      - 15672:15672
+    logging:
+      options:
+        max-size: 100m
+
   rabbitmq:
     restart: always
     image: rabbitmq:3.6.10-alpine
     volumes:
       - "./data/rabbitmq:/var/lib/rabbitmq"
-    logging:
-      options:
-        max-size: 100m
-
-  redis:
-    restart: always
-    image: redis:3.2.10-alpine
-    volumes:
-      - "./data/redis:/data"
     logging:
       options:
         max-size: 100m
@@ -107,9 +100,9 @@ services:
       options:
         max-size: 100m
 
-  smtp:
-    restart: always
-    image: tianon/exim4
-    logging:
-      options:
-        max-size: 100m
+#  smtp:
+#    restart: always
+#    image: tianon/exim4
+#    logging:
+#      options:
+#        max-size: 100m

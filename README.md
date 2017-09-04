@@ -1,6 +1,6 @@
 # 👮 Sentry on Docker Compose
 
-Easy way to bootstrap the Sentry docker infrastructure (with Postgres, Redis, RabbitMQ)
+Easy way to bootstrap the Sentry docker infrastructure (with Postgres, RabbitMQ)
 
 Just create env files and run one of the start commands!
 

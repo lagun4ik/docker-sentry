@@ -4,7 +4,7 @@ services:
 
   nginx:
     restart: always
-    image: nginx:1.13.3-alpine
+    image: nginx:1.13.5-alpine
     ports:
       - "80:80"
     depends_on:

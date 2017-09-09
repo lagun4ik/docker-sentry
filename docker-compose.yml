@@ -8,12 +8,13 @@ services:
   sentry-web:
     restart: always
     image: sentry:8.19.0
-    env_file: env/sentry.env
+    env_file: ./env/sentry.env
     command: "sentry-run web"
     depends_on:
-      - redis
       - postgres
+      - redis
       - rabbitmq
+      - smtp
       - sentry-cron
       - sentry-worker
     volumes:
@@ -28,12 +29,13 @@ services:
   sentry-cron:
     restart: always
     image: sentry:8.19.0
-    env_file: env/sentry.env
+    env_file: ./env/sentry.env
     command: "sentry-run cron"
     depends_on:
-      - redis
       - postgres
+      - redis
       - rabbitmq
+      - smtp
     volumes:
       - ./config/sentry.conf.py:/etc/sentry/sentry.conf.py:ro
       - ./data/sentry-cron/files:/var/lib/sentry/files
@@ -46,12 +48,13 @@ services:
   sentry-worker:
     restart: always
     image: sentry:8.19.0
-    env_file: env/sentry.env
+    env_file: ./env/sentry.env
     command: "sentry-run worker"
     depends_on:
-      - redis
       - postgres
+      - redis
       - rabbitmq
+      - smtp
     volumes:
       - ./config/sentry.conf.py:/etc/sentry/sentry.conf.py:ro
       - ./data/sentry-worker/files:/var/lib/sentry/files
@@ -63,12 +66,13 @@ services:
 
   sentry-installer:
     image: sentry:8.19.0
-    env_file: env/sentry.env
+    env_file: ./env/sentry.env
     command: "sentry-install"
     depends_on:
-      - redis
       - postgres
+      - redis
       - rabbitmq
+      - smtp
     volumes:
       - ./config/sentry.conf.py:/etc/sentry/sentry.conf.py:ro
       - ./data/sentry-installer:/tmp/installer
@@ -79,30 +83,38 @@ services:
 
   rabbitmq:
     restart: always
-    image: rabbitmq:3.6.10-alpine
-    volumes:
-      - "./data/rabbitmq:/var/lib/rabbitmq"
+    env_file: ./env/rabbitmq.env
+    image: rabbitmq:3.6.11-management-alpine
+#    volumes:
+#      - "./data/rabbitmq:/var/lib/rabbitmq"
     logging:
       options:
         max-size: 100m
 
   redis:
     restart: always
-    image: redis:3.2.10-alpine
-    volumes:
-      - "./data/redis:/data"
+    image: redis:4.0.1-alpine
+#    volumes:
+#      - "./data/redis:/data"
     logging:
       options:
         max-size: 100m
 
   postgres:
     restart: always
-    image: postgres:9.6.3-alpine
+    image: postgres:9.6.5-alpine
     env_file: env/postgres.env
-    volumes:
-      - "./data/postgres/etc:/etc/postgresql"
-      - "./data/postgres/log:/var/log/postgresql"
-      - "./data/postgres/data:/var/lib/postgresql/data"
+#    volumes:
+#      - "./data/postgres/etc:/etc/postgresql"
+#      - "./data/postgres/log:/var/log/postgresql"
+#      - "./data/postgres/data:/var/lib/postgresql/data"
+    logging:
+      options:
+        max-size: 100m
+
+  memcached:
+    restart: always
+    image: memcached:1.5.1-alpine
     logging:
       options:
         max-size: 100m

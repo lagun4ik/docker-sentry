@@ -11,21 +11,21 @@ then
 fi
 
 counter=0
-while [[ ! -f ${FILE_FLAG} && ${counter} -lt 1200 ]]; do
+while [[ ! -f ${FILE_FLAG} && ${counter} -lt 2000 ]]; do
 
       if [ ${counter} -eq 0 ]
       then
             sleep 10
       fi
 
-      if [ ${counter} -eq 300 ]
+      if [ ${counter} -eq 2000 ]
       then
             echo "ERROR: Waiting too long" 1>&2
             exit 1
       fi
 
-      sleep 10
-      counter=$((counter+10))
+      sleep 20
+      counter=$((counter+20))
       echo "waiting (${counter}s/1200s)"
 done
 

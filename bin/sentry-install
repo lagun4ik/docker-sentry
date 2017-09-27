@@ -11,10 +11,11 @@ then
       exit 1
 fi
 
+sleep 10
+sentry upgrade --noinput
+      
 if [ ! -f ${FILE_FLAG} ]
 then
-      sleep 10
-      sentry upgrade --noinput
       sentry createuser --email admin --password admin --superuser --no-input
       touch ${FILE_FLAG}
 fi

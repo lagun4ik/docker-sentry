@@ -7,7 +7,7 @@ services:
 
   sentry-web:
     restart: always
-    image: sentry:8.19.0
+    image: sentry:8.20.0
     env_file: ./env/sentry.env
     command: "sentry-run web"
     depends_on:
@@ -28,7 +28,7 @@ services:
 
   sentry-cron:
     restart: always
-    image: sentry:8.19.0
+    image: sentry:8.20.0
     env_file: ./env/sentry.env
     command: "sentry-run cron"
     depends_on:
@@ -47,7 +47,7 @@ services:
 
   sentry-worker:
     restart: always
-    image: sentry:8.19.0
+    image: sentry:8.20.0
     env_file: ./env/sentry.env
     command: "sentry-run worker"
     depends_on:
@@ -65,7 +65,7 @@ services:
         max-size: 100m
 
   sentry-installer:
-    image: sentry:8.19.0
+    image: sentry:8.20.0
     env_file: ./env/sentry.env
     command: "sentry-install"
     depends_on:
@@ -85,8 +85,8 @@ services:
     restart: always
     env_file: ./env/rabbitmq.env
     image: rabbitmq:3.6.11-management-alpine
-#    volumes:
-#      - "./data/rabbitmq:/var/lib/rabbitmq"
+    volumes:
+      - "./data/rabbitmq:/var/lib/rabbitmq"
     logging:
       options:
         max-size: 100m
@@ -94,8 +94,8 @@ services:
   redis:
     restart: always
     image: redis:4.0.1-alpine
-#    volumes:
-#      - "./data/redis:/data"
+    volumes:
+      - "./data/redis:/data"
     logging:
       options:
         max-size: 100m
@@ -104,10 +104,10 @@ services:
     restart: always
     image: postgres:9.6.5-alpine
     env_file: env/postgres.env
-#    volumes:
-#      - "./data/postgres/etc:/etc/postgresql"
-#      - "./data/postgres/log:/var/log/postgresql"
-#      - "./data/postgres/data:/var/lib/postgresql/data"
+    volumes:
+      - "./data/postgres/etc:/etc/postgresql"
+      - "./data/postgres/log:/var/log/postgresql"
+      - "./data/postgres/data:/var/lib/postgresql/data"
     logging:
       options:
         max-size: 100m

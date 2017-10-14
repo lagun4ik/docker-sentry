@@ -7,7 +7,7 @@ services:
 
   sentry-web:
     restart: always
-    image: sentry:8.20.0
+    image: sentry:8.21.0
     env_file: ./env/sentry.env
     command: "sentry-run web"
     depends_on:
@@ -28,7 +28,7 @@ services:
 
   sentry-cron:
     restart: always
-    image: sentry:8.20.0
+    image: sentry:8.21.0
     env_file: ./env/sentry.env
     command: "sentry-run cron"
     depends_on:
@@ -47,7 +47,7 @@ services:
 
   sentry-worker:
     restart: always
-    image: sentry:8.20.0
+    image: sentry:8.21.0
     env_file: ./env/sentry.env
     command: "sentry-run worker"
     depends_on:
@@ -65,7 +65,7 @@ services:
         max-size: 100m
 
   sentry-installer:
-    image: sentry:8.20.0
+    image: sentry:8.21.0
     env_file: ./env/sentry.env
     command: "sentry-install"
     depends_on:

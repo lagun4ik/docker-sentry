@@ -10,7 +10,7 @@ Just create env files and run one of the start commands!
 cp ./env/postgres.env.example ./env/postgres.env
 cp ./env/rabbitmq.env.example ./env/rabbitmq.env
 cp ./env/sentry.env.example ./env/sentry.env
-sed -i 's|SENTRY_SECRET_KEY=|SENTRY_SECRET_KEY='"$(docker run --rm sentry:8.19.0 config generate-secret-key)"'|g' ./env/sentry.env
+sed -i 's|SENTRY_SECRET_KEY=|SENTRY_SECRET_KEY='"$(docker run --rm sentry:8.22.0 config generate-secret-key)"'|g' ./env/sentry.env
 ```
 
 ## Start:

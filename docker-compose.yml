@@ -7,7 +7,7 @@ services:
 
   sentry-web:
     restart: always
-    image: sentry:8.21.0
+    image: sentry:8.22.0
     env_file: ./env/sentry.env
     command: "sentry-run web"
     depends_on:
@@ -28,7 +28,7 @@ services:
 
   sentry-cron:
     restart: always
-    image: sentry:8.21.0
+    image: sentry:8.22.0
     env_file: ./env/sentry.env
     command: "sentry-run cron"
     depends_on:
@@ -47,7 +47,7 @@ services:
 
   sentry-worker:
     restart: always
-    image: sentry:8.21.0
+    image: sentry:8.22.0
     env_file: ./env/sentry.env
     command: "sentry-run worker"
     depends_on:
@@ -65,7 +65,7 @@ services:
         max-size: 100m
 
   sentry-installer:
-    image: sentry:8.21.0
+    image: sentry:8.22.0
     env_file: ./env/sentry.env
     command: "sentry-install"
     depends_on:
@@ -93,7 +93,7 @@ services:
 
   redis:
     restart: always
-    image: redis:4.0.1-alpine
+    image: redis:4.0.6-alpine
     volumes:
       - "./data/redis:/data"
     logging:
@@ -102,7 +102,7 @@ services:
 
   postgres:
     restart: always
-    image: postgres:9.6.5-alpine
+    image: postgres:9.6.6-alpine
     env_file: env/postgres.env
     volumes:
       - "./data/postgres/etc:/etc/postgresql"
@@ -114,7 +114,7 @@ services:
 
   memcached:
     restart: always
-    image: memcached:1.5.1-alpine
+    image: memcached:1.5.3-alpine
     logging:
       options:
         max-size: 100m
